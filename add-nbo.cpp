@@ -3,7 +3,11 @@
 #include "add-nbo.h"
 
 int main(int argc, char **argv){
-	add_nbo(argv);
+	if (argc <= 2){
+		printf("Input: ./add-nbo <file1> <file2>, Try again\n");
+	}else{	
+		add_nbo(argv);
+	}
 }
 int myhtonl(int a[]){
 	int b = (*a & 0xFF000000) >> 24;
