@@ -5,11 +5,11 @@
 int main(int argc, char **argv){
 	add_nbo(argv);
 }
-int myntohs(int a){
-        int b = (a & 0xFF000000) >> 24;
-        int c = (a & 0x00FF0000) >> 8;
-	int d = (a & 0x0000FF00) << 8;
-	int e = (a & 0x000000FF) << 24;
+int myhtonl(int a[]){
+	int b = (*a & 0xFF000000) >> 24;
+        int c = (*a & 0x00FF0000) >> 8;
+	int d = (*a & 0x0000FF00) << 8;
+	int e = (*a & 0x000000FF) << 24;
         return b|c|d|e;
 }
 uint32_t add_nbo(char **argv){
@@ -23,10 +23,11 @@ uint32_t add_nbo(char **argv){
 
         fp2 = fopen(argv[2],"rb");
         fread(num2, 4, 1, fp2);
-	
-       	a = myntohs(num1[0]);
-	b = myntohs(num2[0]);
+	 
+       	a = myhtonl(num1);
+	b = myhtonl(num2);
 	res = a+b;
+
 	printf("%d(0x%x) + %d(0x%x) = %d(0x%x)\n",a,a,b,b,res,res);
        
        	fclose(fp1);
