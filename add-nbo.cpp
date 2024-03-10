@@ -9,27 +9,30 @@ int main(int argc, char **argv){
 		add_nbo(argv);
 	}
 }
-int myhtonl(int a[]){
-	int b = (*a & 0xFF000000) >> 24;
-        int c = (*a & 0x00FF0000) >> 8;
-	int d = (*a & 0x0000FF00) << 8;
-	int e = (*a & 0x000000FF) << 24;
+uint32_t myhtonl(uint32_t a){
+	uint32_t b = (a & 0xFF000000) >> 24;
+        uint32_t c = (a & 0x00FF0000) >> 8;
+	uint32_t d = (a & 0x0000FF00) << 8;
+	uint32_t e = (a & 0x000000FF) << 24;
         return b|c|d|e;
 }
 uint32_t add_nbo(char **argv){
-	
-        FILE *fp1, *fp2;
-        int num1[4],num2[4];
-	int a,b;
-	int res;
-        fp1 = fopen(argv[1],"rb");
-        fread(num1, 4, 1, fp1);
+	FILE *fp1, *fp2;
+        uint8_t num1[4],num2[4];
+	uint32_t a,b;
+	uint32_t res;
+
+	fp1 = fopen(argv[1],"rb");
+        fread(num1, 1, 4, fp1);
 
         fp2 = fopen(argv[2],"rb");
-        fread(num2, 4, 1, fp2);
-	 
-       	a = myhtonl(num1);
-	b = myhtonl(num2);
+        fread(num2, 1, 4, fp2);
+	
+	uint32_t* p1 = reinterpret_cast<uint32_t*>(num1);
+	uint32_t* p2 = reinterpret_cast<uint32_t*>(num2);
+
+       	a = myhtonl(*p1);
+	b = myhtonl(*p2);
 	res = a+b;
 
 	printf("%d(0x%x) + %d(0x%x) = %d(0x%x)\n",a,a,b,b,res,res);
