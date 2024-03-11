@@ -21,22 +21,28 @@ uint32_t add_nbo(char **argv){
         uint8_t num1[4],num2[4];
 	uint32_t a,b;
 	uint32_t res;
-
+	
 	fp1 = fopen(argv[1],"rb");
         fread(num1, 1, 4, fp1);
+	int fileLength1 = ftell(fp1);
 
         fp2 = fopen(argv[2],"rb");
         fread(num2, 1, 4, fp2);
-	
+	int fileLength2 = ftell(fp2);
+
 	uint32_t* p1 = reinterpret_cast<uint32_t*>(num1);
 	uint32_t* p2 = reinterpret_cast<uint32_t*>(num2);
-
+	
        	a = myhtonl(*p1);
 	b = myhtonl(*p2);
 	res = a+b;
+	
+	if (fileLength1 < 4 or fileLength2 < 4){
+		printf("File size is small than 4bytes.\n");
+	} else{
+		printf("%d(0x%x) + %d(0x%x) = %d(0x%x)\n",a,a,b,b,res,res);
+	}
 
-	printf("%d(0x%x) + %d(0x%x) = %d(0x%x)\n",a,a,b,b,res,res);
-       
        	fclose(fp1);
         fclose(fp2);
 
