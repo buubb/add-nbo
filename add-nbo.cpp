@@ -34,8 +34,7 @@ uint32_t add_nbo(char **argv){
 	int fileLength1 = ftell(fp1);
 
         fread(num2, 1, 4, fp2);
-	int fileLength2 = ftell(fp2);
-	
+	int fileLength2 = ftell(fp2);	
 
 	uint32_t* p1 = reinterpret_cast<uint32_t*>(num1);
 	uint32_t* p2 = reinterpret_cast<uint32_t*>(num2);
